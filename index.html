@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turbokill</title>
+</head>
+
+
+
+
+
+<!-- MAIN -->
+<style>
+  @font-face { font-family: blender; src: url('Data/Fonts/Blender-Pro-Bold.otf'); }
+
+  html {
+    --textColor: #f5f5f5;
+    --textColor2: #999999;
+    --textColorHover: #161E2E;
+    --buttonBG: transparent;
+    --buttonBGHover: #f5f5f5;
+    --buttonBorder: #f5f5f5;
+    --buttonHeight: 54px;
+
+    --contentWidth: 64vw;
+
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: var(--textColor);
+    fill: var(--textColor);
+    background: #000000;
+    font-size: 19px;
+    font-family: blender, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body {
+    min-height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: overlay;
+    scroll-behavior: smooth;
+  }
+
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 7px;
+    border: solid 2px transparent;
+    background-clip: content-box;
+  }
+  
+  /*CONTAINERS*/
+  .vc {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hc {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .vc[center], .hc[center] {
+    align-items: center; 
+    justify-content: center;
+  }
+
+  /*DECORATION*/
+  .decorTop > *, .decorTopRight > *, .decorTopLeft > *, .decorBottom > *, .decorBottomRight > *, .decorBottomLeft > * {
+    z-index: 1;
+  }
+
+  .decorTop, .decorTopRight, .decorTopLeft {
+    min-height: 40px; 
+    width: var(--contentWidth); 
+    margin-top: -39px;
+    display: flex;
+    gap: 10px; 
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; 
+    z-index: 1;
+    position: relative;
+  }
+
+  .decorBottom, .decorBottomRight, .decorBottomLeft {
+    min-height: 40px; 
+    width: var(--contentWidth); 
+    margin-bottom: -39px;
+    display: flex;
+    gap: 10px; 
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; 
+    z-index: 1;
+    position: relative;
+  }
+
+  .decorTopLeft, .decorBottomLeft {
+    padding-right: calc(60% + 40px); 
+  }
+
+  .decorTopRight, .decorBottomRight {
+    padding-left: calc(60% + 40px); 
+  }
+
+  .decorTop::after {
+    content: '';
+    height: 40px;
+    width: 80%;
+    top: 0;
+    right: 10%;
+    bottom: 0;
+    left: 10%;
+    position: absolute;
+    box-sizing: border-box;
+    border-bottom: 40px solid black;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+  }
+
+  .decorTopRight::after {
+    content: '';
+    height: 40px;
+    width: 40%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    box-sizing: border-box;
+    border-bottom: 40px solid black;
+    border-left: 40px solid transparent;
+  }
+
+  .decorTopLeft::after {
+    content: '';
+    height: 40px;
+    width: 40%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    box-sizing: border-box;
+    border-bottom: 40px solid black;
+    border-right: 40px solid transparent;
+  }
+
+  .decorBottom::after {
+    content: '';
+    height: 40px;
+    width: 80%;
+    top: 0;
+    right: 10%;
+    bottom: 0;
+    left: 10%;
+    position: absolute;
+    box-sizing: border-box;
+    border-top: 40px solid black;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+  }
+
+  .decorBottomRight::after {
+    content: '';
+    height: 40px;
+    width: 40%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    box-sizing: border-box;
+    border-top: 40px solid black;
+    border-left: 40px solid transparent;
+  }
+
+  .decorBottomLeft::after {
+    content: '';
+    height: 40px;
+    width: 40%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    box-sizing: border-box;
+    border-top: 40px solid black;
+    border-right: 40px solid transparent;
+  }
+
+  /*BUTTON*/
+  .coolButton {
+    height: var(--buttonHeight); 
+    width: fit-content;
+    padding: 0 30px; 
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 2px solid var(--buttonBorder);
+    background: transparent;
+    color: var(--textColor);
+    text-decoration: none;
+    font-weight: normal;
+    user-select: none;
+    cursor: pointer;
+    clip-path: polygon(100% 0, 100% 100%, 13px 100%, 0 calc(var(--buttonHeight) - 13px), 0 0);
+  }
+
+  .coolButton::before {
+    content: '';
+    height: 100%;
+    width: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    box-sizing: border-box;
+    border-bottom: var(--buttonHeight) solid var(--buttonBGHover);
+    border-right: var(--buttonHeight) solid transparent;
+    transform: translateX(calc(-1 * var(--buttonHeight)));
+    transition: width .2s, transform .2s;
+  }
+
+  .coolButton:hover::before {
+    width: calc(100% + var(--buttonHeight));
+    transform: translateX(0);
+  }
+
+  .coolButton::after {
+    content: '';
+    height: 13px;
+    width: 13px;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    background: var(--buttonBorder);
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+  }
+
+  .coolButton span {
+    position: relative;
+    font-size: 1.1rem;
+    z-index: 1;
+    transition: color .2s;
+  }
+
+  .coolButton:hover span {
+    color: var(--textColorHover);
+  }
+
+  /*BUTTON ARRAY*/
+  .buttonArray {
+    height: var(--buttonHeight); 
+    width: fit-content;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    outline-offset: -2px;
+    outline: 2px solid var(--buttonBorder);
+    clip-path: polygon(0 0, calc(100% - 13px) 0%, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
+  }
+
+  .buttonArray::before {
+    content: '';
+    height: 16px;
+    width: 16px;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    background: var(--buttonBorder);
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+  }
+
+  .buttonArray::after {
+    content: '';
+    height: 16px;
+    width: 16px;
+    top: 0;
+    right: 0;
+    position: absolute;
+    background: var(--buttonBorder);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }  
+
+  .buttonArray > a {
+    height: var(--buttonHeight); 
+    width: fit-content;
+    padding: 0 30px; 
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    outline-offset: -1px;
+    outline: 1px solid var(--buttonBorder);
+    background: var(--buttonBG);
+    color: var(--textColor);
+    text-decoration: none;
+    font-weight: normal;
+    user-select: none;
+    transition: background .2s;
+  }
+
+  .buttonArray > a input {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+    transition: background .1s;
+  }
+
+  .buttonArray > a input:checked {
+    background: var(--buttonBGHover);
+  }
+
+  .buttonArray > a span {
+    position: relative;
+    font-size: 1.1rem;
+    z-index: 2;
+    pointer-events: none;
+    transition: color .2s;
+  }
+
+  .buttonArray > a:hover span, .buttonArray > a input:checked + span {
+    color: var(--textColorHover);
+  }
+
+  .buttonArray > a::after {
+    content: '';
+    height: 100%;
+    width: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    box-sizing: border-box;
+    border-bottom: var(--buttonHeight) solid var(--buttonBGHover);
+    border-right: var(--buttonHeight) solid transparent;
+    transform: translateX(calc(-1 * var(--buttonHeight)));
+    transition: width .2s, transform .2s;
+  }
+
+  .buttonArray > a:hover::after {
+    width: calc(100% + var(--buttonHeight));
+    transform: translateX(0);
+  }
+</style>
+
+<!-- CONTENT -->
+<style>
+  /*TOP*/
+  .top {
+    width: 100vw; 
+    height: 70px;
+    top: 0; 
+    left: 0;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 100;
+    background: #0000008f;
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid #161616;
+  }
+
+  .topButton {
+    height: 100%; 
+    width: fit-content; 
+    padding: 0 10px; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .topButton > input {
+    display: none;
+  }
+
+  .topButton > div {
+    height: 2px; 
+    width: 100%; 
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    transition: background .3s;
+  }
+
+  .topButton > input:checked + div {
+    background: #f5f5f5;
+  }
+
+  /*MID*/
+  .mid {
+    width: var(--contentWidth);
+    flex-grow: 1;
+    margin: 0 auto;
+    margin-top: 70px;
+    opacity: 1;
+    transition: opacity .3s;
+  }
+
+  .mid[invisible] {
+    opacity: 0;
+    transition: opacity .2s;
+  }
+
+  .midTab {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    width: 80%; 
+    margin: 50px auto; 
+    font-size: min(3.8rem, 10vw); 
+    text-align: center;
+  }
+
+  .desc {
+    width: 70%; 
+    margin: -20px auto 50px auto; 
+    font-size: 1.2rem; 
+    text-align: center;
+  }
+
+  .textSmall {
+    font-size: .8rem;
+  }
+
+  .midContent {
+    padding: 80px 0;
+    gap: 30px;
+  }
+
+  /*CAMPAIGN*/
+  .aboutMoney {
+    min-width: min(25%, 250px); 
+    padding: 0 30px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px;
+  }
+
+  .aboutDescription, .moreAbout, .moreTeam {
+    flex-grow: 1;
+    text-align: justify;
+  }
+
+  .moreTeam {
+    text-align: center;
+  }
+  
+
+  /*GALLERY*/
+  .gallery {
+    min-height: calc(var(--contentWidth) * 9 / 16); 
+    width: var(--contentWidth); 
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .gallery > div:nth-child(2) {
+    height: 100%; 
+    width: 100%; 
+    display: flex; 
+    transition: transform .4s;
+  }
+
+  .gallery > div:nth-child(2) > img {
+    min-height: 100%; 
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .galleryArrow {
+    height: 100%; 
+    max-width: 50px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute; 
+    top: 0; 
+    left: 0;
+    z-index: 1; 
+    cursor: pointer;
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 20%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+  }
+
+  .galleryArrow[right] {
+    left: auto; 
+    right: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.65) 80%, rgba(0,0,0,1) 100%);
+  }
+
+  .galleryArrow > img {
+    max-height: 30px; 
+    max-width: 30px; 
+    filter: invert(1);
+    transform: rotate(180deg);
+  }
+
+  .galleryArrow[right] > img {
+    transform: rotate(0);
+  }
+
+  .galleryPoint {
+    height: 8px; 
+    width: 8px; 
+    border-radius: 4px; 
+    background: #f5f5f5;
+    cursor: pointer;
+    transition: width .5s;
+  }
+
+  .galleryPoint[selected] {
+    width: 16px;
+  }
+
+  /*VIDEO PLAYER*/
+  .videoPlayer {
+    width: 100%; 
+    aspect-ratio: 16/9; 
+    position: relative; 
+    background: black;
+  }
+
+  .videoPlayer > video {
+    height: 100%;
+    width: 100%; 
+  }
+
+  .videoPlayer > overlay {
+    height: 100%; 
+    width: 100%; 
+    position: absolute; 
+    top: 0; 
+    left: 0;
+    display: flex;
+    flex-direction: column-reverse; 
+    opacity: 0;
+    transition: opacity .2s;
+  }
+
+  .videoPlayer > overlay:hover {
+    opacity: 1;
+  }
+
+  /*CONTRIBUTIONS*/
+  .contriContent {
+    width: 100%; 
+    height: max-content; 
+    margin-top: 25px; 
+    display: none; 
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 40px;
+    position: relative;
+  }
+
+  .contriBox {
+    width: max(30%, 330px); 
+    box-sizing: border-box; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column;
+    text-align: center;
+    align-items: center; 
+    border-radius: 15px; 
+    outline: solid 1px #f5f5f5;
+  }
+
+  .contriBox > span:nth-child(1) {
+    font-size: 1.8rem; 
+    text-transform: uppercase;
+  }
+
+  .contriBox > span:nth-child(2) {
+    font-size: 1.2rem; 
+    margin-top: 5px;
+  }
+
+  .contriBox > span:nth-child(3) {
+    margin-top: 5px; 
+    color: var(--textColor2);
+  }
+
+  .contriBox > span:nth-child(4) {
+    font-size: 1.3rem; 
+    margin-top: 20px;
+  }
+
+  .contriBox > div:nth-child(5) {
+    margin: 5px 0 20px 0;
+    display: flex; 
+    flex-direction: column; 
+    gap: 5px;
+    text-align: left;
+  }
+
+  .contriBox > a:nth-child(6) {
+    margin: auto 0 5px 0;
+  }
+
+  /*FAQ*/
+  .FAQContainer {
+    display: flex;
+    gap: 30px;
+  }
+
+  .FAQContainer[mobile] {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .FAQContainer > div:nth-child(1) {
+    width: calc(70% - 15px); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .FAQContainer > div:nth-child(2) {
+    width: calc(30% - 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .FAQContainer[mobile] > div:nth-child(1), .FAQContainer[mobile] > div:nth-child(2) {
+    width: calc(100% - 50px);
+  }
+
+  .FAQuestion {
+    height: fit-content; 
+    width: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    outline-offset: -2px;
+    outline: 2px solid var(--buttonBorder);
+    clip-path: polygon(0 0, calc(100% - 13px) 0%, 100% 13px, 100% 100%, 13px 100%, 0 calc(100% - 13px));
+  }
+
+  .FAQuestion::before {
+    content: '';
+    height: 16px;
+    width: 16px;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    background: var(--buttonBorder);
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+  }
+
+  .FAQuestion::after {
+    content: '';
+    height: 16px;
+    width: 16px;
+    top: 0;
+    right: 0;
+    position: absolute;
+    background: var(--buttonBorder);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+
+  .FAQuestion > span:nth-of-type(1) {
+    min-height: var(--buttonHeight);
+    width: calc(100% - 30px);
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .FAQuestion > input {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .FAQuestion > input:checked + span {
+    display: flex;
+  }
+
+  .FAQuestion > span:nth-of-type(2) {
+    width: calc(100% - 45px);
+    display: flex;
+    align-items: center;
+    margin: 0 auto 15px 30px;
+    display: none;
+  }
+
+
+  /*BOT*/
+  .bot {
+    width: var(--contentWidth);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transition: opacity .3s;
+  }
+
+  .bot[invisible] {
+    opacity: 0;
+    transition: opacity .2s;
+  }
+
+  .disclaimer {
+    width: 80%; 
+    margin: 20px auto;
+    text-align: center;
+    font-size: .7rem;
+  }
+</style>
+
+
+
+
+
+<!-- HTML -->
+<body>
+  <!-- TOP -->
+  <div class="top">
+    <div class="topButton" onclick="changeTab('campaign')">
+      <input id="top-campaign" type="radio" name="top" checked>
+      <div></div>
+      <span>Campaña</span>
+    </div>
+    <div class="topButton" onclick="changeTab('faq')">
+      <input id="top-faq" type="radio" name="top">
+      <div></div>
+      <span>FAQ</span>
+    </div>
+    <div class="topButton" onclick="changeTab('comments')">
+      <input id="top-comments" type="radio" name="top">
+      <div></div>
+      <span>Comentarios</span>
+    </div>
+  </div>
+
+  <!-- MID -->
+  <div id="mid" class="mid">
+    <!-- CAMPAIGN -->
+    <div id="campaign" class="midTab">
+      <span class="title">TURBOKILL</span>
+      <span class="desc">Una experiencia de FPS acelerada en un mundo medieval lleno de criaturas misteriosas.</span>
+      
+      <!-- COVER IMG -->
+      <div class="decorBottomLeft"></div>
+      <img style="width: 100%;" src="Data/Images/BG1.jpg">
+      <div class="decorTopRight"></div>
+
+      <!-- ABOUT -->
+      <div id="about" class="vc midContent">
+        <!-- ABOUT -->
+        <div id="aboutAbout" style="width: 100%; display: flex; flex-direction: row-reverse; gap: 30px;">
+          <!-- MONEY -->
+          <div id="aboutMoney" class="aboutMoney">
+            <span>
+              <span style="font-size: 2rem;">23.200€</span>
+              recaudado de la meta de 50.000€
+            </span>
+            <a class="coolButton" onclick="toggleContributions()">
+              <span>Apoyar</span>
+            </a>
+            <span>
+              <span style="font-size: .8rem;">Creado por</span>
+              <br>
+              Team GAMAR (GRUPO F)
+            </span>
+          </div>
+          <!-- DESCRIPTION -->
+          <div id="aboutDescription" class="aboutDescription">
+            <span>The Hog Rider is a Rare card that is unlocked from the Builder's Workshop (Arena 5). He is a quick, building-targeting melee troop with moderately high hitpoints and damage. He appears just like his Clash of Clans counterpart; a man with brown eyebrows, a beard, a mohawk, and a golden body piercing in his left ear who is riding a hog. A Hog Rider card costs 4 Elixir to deploy.</span>
+          </div>
+        </div>
+        <!-- CONTRIBUTIONS -->
+        <div id="aboutContributions" class="contriContent">
+          <!-- CONTRIBUTION 1 -->
+          <div class="contriBox">
+            <span>Interesado</span>
+            <span>Apoya con 5€ o más</span>
+            <span>Ayuda a el desarrollo de nuestro juego.</span>
+            <span>Inclulle:</span>
+            <div>
+              <span>· Soundtrack de TURBOKILL.</span>
+              <span>· Artbook de TURBOKILL.</span>
+            </div>
+            <a class="coolButton" target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+              <span>Elegir</span>
+            </a>
+          </div>
+          <!-- CONTRIBUTION 2 -->
+          <div class="contriBox">
+            <span>Seguidor</span>
+            <span>Apoya con 20€ o más</span>
+            <span>Consigue nuestro juego cuando salga a la venta.</span>
+            <span>Inclulle:</span>
+            <div>
+              <span>· Descarga digital en Steam o GOG.</span>
+              <span>· Soundtrack de TURBOKILL.</span>
+              <span>· Artbook de TURBOKILL.</span>
+            </div>
+            <a class="coolButton" target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+              <span>Elegir</span>
+            </a>
+          </div>
+          <!-- CONTRIBUTION 3 -->
+          <div class="contriBox">
+            <span>Turbokiller</span>
+            <span>Apoya con 30€ o más</span>
+            <span>Consigue nuestro juego en early access con el pack extra de contenido para patrocinadores.</span>
+            <span>Inclulle:</span>
+            <div>
+              <span>· Descarga digital en Steam o GOG.</span>
+              <span>· Skins exclusivas para el personaje.</span>
+              <span>· Skins exclusivas para las armas.</span>
+              <span>· Soundtrack de TURBOKILL.</span>
+              <span>· Artbook de TURBOKILL.</span>
+            </div>
+            <a class="coolButton" target="_blank" href="https://youtu.be/dQw4w9WgXcQ">
+              <span>Elegir</span>
+            </a>
+          </div>
+        </div>
+      </div>
+        
+      <!-- GALLERY -->
+      <div class="decorBottomLeft"></div>
+      <div class="gallery">
+        <div class="galleryArrow" onclick="galleryPrevious()">
+          <img src="Data/Images/Icons/arrow.png">
+        </div>
+        <div id="galleryImages">
+          <img src="Data/Images/BG2.jpg">
+          <img src="Data/Images/BG1.jpg">
+          <img src="Data/Images/BG2.jpg">
+          <img src="Data/Images/BG1.jpg">
+        </div>
+        <div class="galleryArrow" right onclick="galleryNext()">
+          <img src="Data/Images/Icons/arrow.png">
+        </div>
+      </div>    
+      <div id="galleryPoints" class="decorTopRight">
+        <div class="galleryPoint" onclick="galleryUpdate(0)" selected></div>
+        <div class="galleryPoint" onclick="galleryUpdate(1)"></div>
+        <div class="galleryPoint" onclick="galleryUpdate(2)"></div>
+        <div class="galleryPoint" onclick="galleryUpdate(3)"></div>
+      </div>
+
+      <!-- MORE -->
+      <div id="more" class="vc midContent" center>
+        <!-- BUTTONS -->
+        <div class="buttonArray">
+          <a>
+            <input id="moreB1" type="radio" name="row1" onclick="updateCampaing()" checked>
+            <span>Acerca</span>
+          </a>
+          <a>
+            <input id="moreB2" type="radio" name="row1" onclick="updateCampaing()">
+            <span>Video</span>
+          </a>
+          <a>
+            <input id="moreB3" type="radio" name="row1" onclick="updateCampaing()">
+            <span>Equipo</span>
+          </a>
+        </div>
+
+        <!-- ABOUT -->
+        <div id="moreAbout" class="moreAbout">
+          <span>
+            La unidad E 642 o Schwerer Gustav tuvo una vida operativa de 13 días, durante los cuales disparó un total de 48 proyectiles. Necesitó un convoy ferroviario de 25 vagones para ser transportado hasta el Istmo de Perekop, a donde llegó a principios de marzo de 1942. Allí quedó sin entrar en acción mientras se construía una línea férrea hasta el punto donde se montaría, a 16 kilómetros al norte de Sebastopol. También hubo que levantar grúas especiales para montarlo. En total fueron necesarias cinco semanas y 4.000 hombres para montar el cañón. La instalación comenzó a primeros de mayo y hasta el 5 de junio no estuvo preparado para abrir fuego.
+            <br><br>
+            La cantidad de mano de obra necesaria para ensamblar el “Gustav” era ingente. Tenía un destacamento de 1.420 hombres al mando de un coronel. Este disponía de su propio cuartel general y personal de planificación. La dotación principal era de alrededor de 500 hombres, la mayoría de ellos necesarios para el complicado proceso de mantenimiento y manejo de la munición. El resto del personal estaba formado por varias unidades auxiliares, incluyendo una de inteligencia para determinar qué objetivos debían bombardearse. Otras tropas formaban parte de los dos batallones de artillería antiaérea ligera, que siempre acompañaban al cañón cuando viajaba y que se encargaban además de algunas tareas de ensamblaje. Una vez que el cañón estaba en posición, estos batallones antiaéreos defendían la pieza de ataques aéreos. Dos compañías patrullaban el perímetro de la posición (en una ocasión, estas compañías fueron rumanas), y en todo momento había un pequeño grupo de ingenieros civiles de Krupp que trataban los aspectos técnicos del cañón e instruían a los soldados. Las tropas ferroviarias y el personal administrativo completaban la dotación.
+          </span>
+        </div>
+
+        <!-- VIDEO -->
+        <div id="moreVideo" class="videoPlayer" style="display: none;">
+          <video id="moreVideoPlayer" controls controlsList="nofullscreen">
+            <source src="Data/Videos/JohnChina.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <!-- TEAM -->
+        <div id="moreTeam" class="moreTeam" style="display: none;">
+          <span>
+            Alejandro Paniagua
+            <br>
+            <span class="textSmall">Programacion</span><br>
+            <span class="textSmall">(Programacion HTML)</span><br>
+            <br>
+            Raúl Alfonso
+            <br>
+            <span class="textSmall">Modelado 3D</span><br>
+            <span class="textSmall">(Trailer y capturas)</span><br>
+            <br>
+            Marianna Jiménez
+            <br>
+            <span class="textSmall">Job Fake</span><br>
+            <span class="textSmall">Job Real</span><br>
+            <br>
+            Alberto López
+            <br>
+            <span class="textSmall">Job Fake</span><br>
+            <span class="textSmall">Job Real</span><br>
+            <br>
+            Garazi Blanco
+            <br>
+            <span class="textSmall">Job Fake</span><br>
+            <span class="textSmall">Job Real</span><br>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div id="faq" class="midTab" style="display: none;">
+      <span class="title">FAQ</span>
+      <!-- SOMETHIN -->
+      <div id="faqContainer" class="FAQContainer">
+        <!-- QUESTIONS -->
+        <div>
+          <div class="FAQuestion">
+            <span>Pregunta 1</span>
+            <input type="radio" name="faq">
+            <span>Respuesta 1</span>
+          </div>
+          <div class="FAQuestion">
+            <span>Pregunta 2</span>
+            <input type="radio" name="faq">
+            <span>Respuesta 2</span>
+          </div>
+          <div class="FAQuestion">
+            <span>Pregunta 3</span>
+            <input type="radio" name="faq">
+            <span>Respuesta 3</span>
+          </div>
+          <div class="FAQuestion">
+            <span>Pregunta 4</span>
+            <input type="radio" name="faq">
+            <span>Respuesta 4</span>
+          </div>
+        </div>
+        <!-- ASK -->
+        <div>
+          <span>¿No encuentras lo que buscas?</span>
+          <a class="coolButton" onclick="changeTab('comments')">
+            <span>Preguntanos</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- COMMENTS -->
+    <div id="comments" class="midTab" style="display: none;">
+      <span class="title">COMENTARIOS</span>
+      <!-- SOMETHIN -->
+      <div id="disqus_thread"></div>
+    </div>
+  </div>
+
+
+  <!-- BOT -->
+  <div id="bot" class="bot">
+    <!-- DISCLAIMER -->
+    <span class="disclaimer">
+      ATENCIÓN: Esta página simula la campaña de microfinanciación de un videojuego ficticio y no representa un producto real. Práctica de Multimedia, 1º GDDV - Curso 22/23 (Quintana), URJC. La URJC no se hace responsable del contenido expuesto por el autor.
+    </span>
+  </div>
+</body>
+
+
+
+
+
+<!-- SCRIPT -->
+<script>
+  //MOBILE
+  let isMobile
+  function toggleMobile() {
+    //CHECK IF MOBILE CHANGED
+    const mobile =  window.innerWidth / window.innerHeight < 1.2;
+    if (isMobile == mobile) return
+    isMobile = mobile;
+    //UPDATE
+    if (isMobile) {
+      document.body.style.setProperty('--contentWidth', '100vw');
+      document.getElementById('aboutAbout').style.flexDirection = 'column-reverse'
+      document.getElementById('aboutDescription').style.maxWidth = 'calc(100% - 50px)'
+      document.getElementById('aboutDescription').style.margin = '0 25px'
+      document.getElementById('moreAbout').style.maxWidth = 'calc(100% - 50px)'
+      document.getElementById('moreTeam').style.maxWidth = 'calc(100% - 50px)'
+      document.getElementById('faqContainer').setAttribute('mobile', '')
+    } else {
+      document.body.style.setProperty('--contentWidth', '64vw');
+      document.getElementById('aboutAbout').style.flexDirection = 'row-reverse'
+      document.getElementById('aboutDescription').style.maxWidth = ''
+      document.getElementById('aboutDescription').style.margin = ''
+      document.getElementById('moreAbout').style.maxWidth = ''
+      document.getElementById('moreTeam').style.maxWidth = ''
+      document.getElementById('faqContainer').removeAttribute('mobile')
+    }
+  }
+  window.addEventListener("resize", toggleMobile);
+  toggleMobile()
+
+
+  //TABS
+  let isChangingTab = false
+  let currentTab = 'campaign'
+  function changeTab(tab) {
+    //IS CHANGING TAB
+    if (isChangingTab) return
+    //SCROLL TO TOP
+    if (currentTab == tab) window.scrollTo({top: 0, behavior: 'smooth'});
+    //PAUSE VIDEO PLAYER
+    videoPlayer.pause()
+    //START
+    if (currentTab == tab) return;
+    isChangingTab = true
+    currentTab = tab
+    //HIDE MIDDLE
+    document.getElementById('mid').setAttribute('invisible', '')
+    document.getElementById('bot').setAttribute('invisible', '')
+    //SELECT TAB
+    document.getElementById('top-'+tab).click()
+    setTimeout(() => {
+      window.scrollTo({top: 0});
+      switch(tab) {
+        default:
+        case 'campaign':
+          document.getElementById('campaign').style.display = ''
+          document.getElementById('faq').style.display = 'none'
+          document.getElementById('comments').style.display = 'none'
+          break
+        case 'faq':
+          document.getElementById('campaign').style.display = 'none'
+          document.getElementById('faq').style.display = ''
+          document.getElementById('comments').style.display = 'none'
+          break
+        case 'comments':
+          document.getElementById('campaign').style.display = 'none'
+          document.getElementById('faq').style.display = 'none'
+          document.getElementById('comments').style.display = ''
+          break
+      }
+      //SHOW MIDDLE
+      setTimeout(() => { 
+        document.getElementById('mid').removeAttribute('invisible')
+        document.getElementById('bot').removeAttribute('invisible')
+      }, 10)
+      //WAIT UNTIL FINISHED
+      setTimeout(() => {
+        isChangingTab = false
+      }, 300)
+    }, 200)
+  }
+
+
+  //CONTRIBUTIONS
+  let contributionsVisible = false
+  const contributions = document.getElementById('aboutContributions')
+  function toggleContributions(toggle) {
+    //TOGGLE
+    if (typeof toggle == 'boolean') contributionsVisible = toggle
+    else contributionsVisible = !contributionsVisible
+    //UPDATE
+    contributions.style.display = (contributionsVisible ? "flex" : "none")
+  }
+
+
+  //GALLERY
+  let galleryIndex = 0
+  const galeryImages = document.getElementById('galleryImages')
+  const galeryPoints = document.getElementById('galleryPoints')
+  function galleryUpdate(index) {
+    if (typeof index == 'number') galleryIndex = index
+    //MOVE IMAGE
+    galeryImages.style.transform = `translateX(${- galleryIndex * 100}%)`
+    //UPDATE POINTS
+    for (let i = 0; i < galeryPoints.children.length; i++) {
+      if (galleryIndex == i) galeryPoints.children[i].setAttribute('selected', '')
+      else galeryPoints.children[i].removeAttribute('selected')
+    }
+  }
+  function galleryNext() {
+    if (galleryIndex == galeryImages.children.length - 1) 
+      galleryUpdate(0);
+    else
+      galleryUpdate(galleryIndex + 1);
+  }
+  function galleryPrevious() {
+    if (galleryIndex == 0) 
+      galleryUpdate(galeryImages.children.length - 1);
+    else
+      galleryUpdate(galleryIndex - 1);
+  }
+
+
+  //MORE
+  let currentCamp = 'about'
+  const videoPlayer = document.getElementById('moreVideoPlayer')
+  function updateCampaing() {
+    //PAUSE VIDEO PLAYER
+    videoPlayer.pause()
+    //GET CURRENT BUTTON
+    if (document.getElementById('moreB1').checked)
+      currentCamp = 'about'
+    else if (document.getElementById('moreB2').checked)
+      currentCamp = 'video'
+    else
+      currentCamp = 'team'
+    //UPDATE
+    switch(currentCamp) {
+      default:
+      case 'about':
+        document.getElementById('moreAbout').style.display = ''
+        document.getElementById('moreVideo').style.display = 'none'
+        document.getElementById('moreTeam').style.display = 'none'
+        break
+      case 'video':
+        document.getElementById('moreAbout').style.display = 'none'
+        document.getElementById('moreVideo').style.display = ''
+        document.getElementById('moreTeam').style.display = 'none'
+        break
+      case 'team':
+        document.getElementById('moreAbout').style.display = 'none'
+        document.getElementById('moreVideo').style.display = 'none'
+        document.getElementById('moreTeam').style.display = ''
+        break
+    }
+    //SCROLL TO TOP
+    document.getElementById('more').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+<!-- DISQUS SCRIPT -->
+<script id="dsq-count-scr" src="//turbokill.disqus.com/count.js" async></script>
+<script>
+  /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+  
+  var disqus_config = function () {
+    this.page.url = '{{content.absolute_url}}';  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = 'turbokill'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  
+  (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://turbokill.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+</html>
