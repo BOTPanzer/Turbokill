@@ -17,6 +17,7 @@
 
   html {
     --textColor: #f5f5f5;
+    --textFilter: brightness(0) invert(1);
     --textColor2: #999999;
     --textColorHover: #161E2E;
     --buttonBG: transparent;
@@ -525,7 +526,7 @@
   .galleryArrow > img {
     max-height: 30px; 
     max-width: 30px; 
-    filter: invert(1);
+    filter: var(--textFilter);
     transform: rotate(180deg);
   }
 
@@ -551,28 +552,77 @@
     width: 100%; 
     aspect-ratio: 16/9; 
     position: relative; 
-    background: black;
   }
 
   .videoPlayer > video {
     height: 100%;
     width: 100%; 
   }
-
-  .videoPlayer > overlay {
+  
+  .videoControls {
     height: 100%; 
     width: 100%; 
     position: absolute; 
     top: 0; 
-    left: 0;
-    display: flex;
-    flex-direction: column-reverse; 
     opacity: 0;
     transition: opacity .2s;
   }
 
-  .videoPlayer > overlay:hover {
+  .videoControls:hover  {
     opacity: 1;
+  }
+
+  .videoControls > div:nth-child(1) {
+    height: 60px;
+    width: 100%;
+    padding: 0 35px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  }
+
+  .videoControls > div:nth-child(1) > img {
+    height: 24px; 
+    width: 24px; 
+    filter: var(--textFilter);
+  }
+
+  .videoControls > div:nth-child(1) > img:nth-of-type(1) {
+    cursor: pointer;
+    margin-right: auto;
+  }
+
+  .videoControls > div:nth-child(1) > input {
+    height: 10px;
+    margin-left: 15px;
+    appearance: none;
+    background: var(--textColor);
+    border-radius: 5px;
+    transition: all .2s;
+  }
+
+  .videoControls > div:nth-child(1) > input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--textColor);
+    box-shadow: 1px 1px 8px #00000079;
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .videoControls > div:nth-child(1) > input:nth-of-type(1) {
+    width: 100%;
+    margin: 0 45px 0 15px;
+  }
+
+  .videoControls > div:nth-child(1) > input:nth-of-type(2) {
+    width: 140px;
   }
 
   /*CONTRIBUTIONS*/
@@ -742,6 +792,24 @@
     transition: opacity .2s;
   }
 
+  .socials {
+    width: 100%; 
+    display: flex;
+    justify-content: center; 
+    gap: 25px;
+  }
+
+  .social {
+    height: 22px; 
+    width: 22px;
+    filter: var(--textFilter);
+    transition: transform .15s;
+  }  
+  
+  .social:hover {
+    transform: translateY(-3px);
+  }
+
   .disclaimer {
     width: 80%; 
     margin: 20px auto;
@@ -808,7 +876,12 @@
           </div>
           <!-- DESCRIPTION -->
           <div id="aboutDescription" class="aboutDescription">
-            <span>The Hog Rider is a Rare card that is unlocked from the Builder's Workshop (Arena 5). He is a quick, building-targeting melee troop with moderately high hitpoints and damage. He appears just like his Clash of Clans counterpart; a man with brown eyebrows, a beard, a mohawk, and a golden body piercing in his left ear who is riding a hog. A Hog Rider card costs 4 Elixir to deploy.</span>
+            <span>
+              The Hog Rider is a Rare card that is unlocked from the Builder's Workshop (Arena 5). 
+              He is a quick, building-targeting melee troop with moderately high hitpoints and damage. 
+              He appears just like his Clash of Clans counterpart; a man with brown eyebrows, a beard, a mohawk, and a golden body piercing in his left ear who is riding a hog. 
+              A Hog Rider card costs 4 Elixir to deploy.
+            </span>
           </div>
         </div>
         <!-- CONTRIBUTIONS -->
@@ -914,9 +987,17 @@
 
         <!-- VIDEO -->
         <div id="moreVideo" class="videoPlayer" style="display: none;">
-          <video id="moreVideoPlayer" controls controlsList="nofullscreen">
+          <video id="moreVideoPlayer" controlsList="nofullscreen" autoplay="true">
             <source src="Data/Videos/JohnChina.mp4" type="video/mp4">
           </video>
+          <div id="videoControls" class="videoControls">
+            <div>
+              <img id="moreVideoPlay" src="Data/Images/Icons/play.png">
+              <input id="moreVideoSeek" type="range" min="0" max="1000" value="0" onclick="event.stopPropagation()">
+              <img src="Data/Images/Icons/sound.png">
+              <input id="moreVideoSound" type="range" min="0" max="100" value="50" onclick="event.stopPropagation()">
+            </div>
+          </div>
         </div>
 
         <!-- TEAM -->
@@ -1000,6 +1081,18 @@
 
   <!-- BOT -->
   <div id="bot" class="bot">
+    <!-- SOCIALS -->
+    <div class="socials">
+      <a target="_blank" href="https://www.instagram.com/gamar.games/">
+        <img class="social" src="Data/Images/Icons/ig.png">
+      </a>
+      <a target="_blank" href="https://www.tiktok.com/@gamar.games">
+        <img class="social" src="Data/Images/Icons/tiktok.png">
+      </a>
+      <a target="_blank" href="https://twitter.com/GamarGames_">
+        <img class="social" src="Data/Images/Icons/twitter.png">
+      </a>
+    </div>
     <!-- DISCLAIMER -->
     <span class="disclaimer">
       ATENCIÓN: Esta página simula la campaña de microfinanciación de un videojuego ficticio y no representa un producto real. Práctica de Multimedia, 1º GDDV - Curso 22/23 (Quintana), URJC. La URJC no se hace responsable del contenido expuesto por el autor.
@@ -1135,6 +1228,28 @@
   }
 
 
+  //VIDEO
+  const video = document.getElementById('moreVideoPlayer')
+  const videoControls = document.getElementById('videoControls')
+  const videoPlay = document.getElementById('moreVideoPlay')
+  const videoSeek = document.getElementById('moreVideoSeek')
+  const videoSound = document.getElementById('moreVideoSound')
+  video.volume = 0.5
+  video.onpause = () => { videoPlay.src = "Data/Images/Icons/play.png" }
+  video.onplay = () => { videoPlay.src = "Data/Images/Icons/pause.png" }
+  videoControls.onclick = () => {
+    if (video.paused) video.play()
+    else video.pause()
+  }
+  videoSeek.oninput = () => { video.currentTime = videoSeek.value / 1000 * video.duration }
+  videoSound.oninput = () => { video.volume = videoSound.value / 100 }
+  function updateSeekBar() {
+    videoSeek.value = video.currentTime * 1000 / video.duration
+    setTimeout(updateSeekBar, 100)
+  }
+  setTimeout(updateSeekBar, 100)
+
+
   //MORE
   let currentCamp = 'about'
   const videoPlayer = document.getElementById('moreVideoPlayer')
@@ -1157,6 +1272,9 @@
         document.getElementById('moreTeam').style.display = 'none'
         break
       case 'video':
+        setTimeout(() => {
+          video.play()
+        }, 200) 
         document.getElementById('moreAbout').style.display = 'none'
         document.getElementById('moreVideo').style.display = ''
         document.getElementById('moreTeam').style.display = 'none'
@@ -1175,13 +1293,9 @@
 <!-- DISQUS SCRIPT -->
 <script id="dsq-count-scr" src="//turbokill.disqus.com/count.js" async></script>
 <script>
-  /**
-  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-  
   var disqus_config = function () {
-    this.page.url = 'https://botpanzer.github.io/Turbokill/';  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = 'turbokill'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = 'https://botpanzer.github.io/Turbokill/';
+    this.page.identifier = 'turbokill';
   };
   
   (function() { // DON'T EDIT BELOW THIS LINE
