@@ -26,6 +26,7 @@
     --buttonHeight: 54px;
 
     --contentWidth: 64vw;
+    --aboutImageWidth: 80%;
 
     height: 100%;
     width: 100%;
@@ -474,6 +475,10 @@
   .aboutDescription, .moreAbout, .moreTeam {
     flex-grow: 1;
     text-align: justify;
+  }
+
+  .moreAbout {
+    width: 80%;
   }
 
   .aboutCenter {
@@ -955,9 +960,11 @@
           <img src="Data/Images/Icons/arrow.png">
         </div>
         <div id="galleryImages">
-          <img src="Data/Images/cap1.jpg">
-          <img src="Data/Images/cap2.jpg">
+          <img src="Data/Images/Screenshot_1.png">
+          <img src="Data/Images/Screenshot_2.png">
           <img src="Data/Images/cartel2.jpg">
+          <img src="Data/Images/Screenshot_3.png">
+          <img src="Data/Images/Screenshot_4.png">
           <img src="Data/Images/cartel_principal.jpg">
         </div>
         <div class="galleryArrow" right onclick="galleryNext()">
@@ -969,6 +976,8 @@
         <div class="galleryPoint" onclick="galleryUpdate(1)"></div>
         <div class="galleryPoint" onclick="galleryUpdate(2)"></div>
         <div class="galleryPoint" onclick="galleryUpdate(3)"></div>
+        <div class="galleryPoint" onclick="galleryUpdate(4)"></div>
+        <div class="galleryPoint" onclick="galleryUpdate(5)"></div>
       </div>
 
       <!-- MORE -->
@@ -1002,18 +1011,18 @@
             <br><br>
             Gracias a las cargas de dashes, podrás realizar hasta 3 esquives antes de que te golpeen los enemigos. Estas cargas se recuperan poco a poco a medida que pasa el tiempo.
             <br><br>
-            <div class="aboutCenter">*gif de los dashes*</div>
-            <br>
+            <img style="width: var(--aboutImageWidth); margin-left: calc((100% - var(--aboutImageWidth)) / 2);" src="Data/Videos/dash.gif">
+            <br><br>
             Epicas batallas te esperan a lo largo de tu viaje por nuestro universo. Si consigues sobrevivir, podrás obtener mejoras de habilidades y enfrentarte a las siguientes bestias que te esperan.
             <br><br>
-            <div class="aboutCenter">*gif matar enemigos*</div>
-            <br><br>
+            <img style="width: var(--aboutImageWidth); margin-left: calc((100% - var(--aboutImageWidth)) / 2);" src="Data/Videos/enemies.gif">
+            <br><br><br>
             <div class="aboutCenter" big>ESTILO</div>
             <br>
             En Turbokill te encontrarás con un estilo similar al de la Playstation original fusionado con la temática de Bloodborne y las armas del Cyberpunk 2077.
             <br><br>
-            <div class="aboutCenter">*foto donde se vean ambos*</div>
-            <br><br>
+            <img style="width: var(--aboutImageWidth); margin-left: calc((100% - var(--aboutImageWidth)) / 2);" src="Data/Videos/weapon.gif">
+            <br><br><br>
             <div class="aboutCenter" big>PLATAFORMAS</div>
             <br>
             <div class="aboutCenter" style="gap: 30px">
@@ -1157,6 +1166,7 @@
     //UPDATE
     if (isMobile) {
       document.body.style.setProperty('--contentWidth', '100vw');
+      document.body.style.setProperty('--aboutImageWidth', '100%');
       document.getElementById('aboutAbout').style.flexDirection = 'column-reverse'
       document.getElementById('aboutDescription').style.maxWidth = 'calc(100% - 50px)'
       document.getElementById('aboutDescription').style.margin = '0 25px'
@@ -1165,6 +1175,7 @@
       document.getElementById('faqContainer').setAttribute('mobile', '')
     } else {
       document.body.style.setProperty('--contentWidth', '64vw');
+      document.body.style.setProperty('--aboutImageWidth', '80%');
       document.getElementById('aboutAbout').style.flexDirection = 'row-reverse'
       document.getElementById('aboutDescription').style.maxWidth = ''
       document.getElementById('aboutDescription').style.margin = ''
