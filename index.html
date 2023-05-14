@@ -476,6 +476,16 @@
     text-align: justify;
   }
 
+  .aboutCenter {
+    width: 100%; 
+    display: flex; 
+    justify-content: center;
+  }
+
+  .aboutCenter[big] {
+    font-size: 2rem;
+  }
+
   .moreTeam {
     text-align: center;
   }
@@ -795,6 +805,7 @@
 
   .socials {
     width: 100%; 
+    margin-top: 14px;
     display: flex;
     justify-content: center; 
     gap: 25px;
@@ -878,15 +889,16 @@
           <!-- DESCRIPTION -->
           <div id="aboutDescription" class="aboutDescription">
             <span>
-              The Hog Rider is a Rare card that is unlocked from the Builder's Workshop (Arena 5). 
-              He is a quick, building-targeting melee troop with moderately high hitpoints and damage. 
-              He appears just like his Clash of Clans counterpart; a man with brown eyebrows, a beard, a mohawk, and a golden body piercing in his left ear who is riding a hog. 
-              A Hog Rider card costs 4 Elixir to deploy.
+              Turbokill es un FPS de acción acelerada ultraviolento con estética retro que combina un estilo basado en la skill con otro basado en la masacre, ambos inspirados en juegos antiguos como el Doom o el Quake. 
+              <br><br>
+              Destruye, dispara, explota y baña en sangre a tus enemigos con diferentes armas destructivas.
             </span>
           </div>
         </div>
         <!-- CONTRIBUTIONS -->
         <div id="aboutContributions" class="contriContent">
+          <!-- ELEMENT TO SCROLL TO -->
+          <div id="aboutContributionsScrollTo" style="height: 0; position: absolute; margin-top: -100px;"></div>
           <!-- CONTRIBUTION 1 -->
           <div class="contriBox">
             <span>Interesado</span>
@@ -945,8 +957,8 @@
         <div id="galleryImages">
           <img src="Data/Images/cap1.jpg">
           <img src="Data/Images/cap2.jpg">
-          <img src="Data/Images/cartel_principal.jpg">
           <img src="Data/Images/cartel2.jpg">
+          <img src="Data/Images/cartel_principal.jpg">
         </div>
         <div class="galleryArrow" right onclick="galleryNext()">
           <img src="Data/Images/Icons/arrow.png">
@@ -980,9 +992,36 @@
         <!-- ABOUT -->
         <div id="moreAbout" class="moreAbout">
           <span>
-            La unidad E 642 o Schwerer Gustav tuvo una vida operativa de 13 días, durante los cuales disparó un total de 48 proyectiles. Necesitó un convoy ferroviario de 25 vagones para ser transportado hasta el Istmo de Perekop, a donde llegó a principios de marzo de 1942. Allí quedó sin entrar en acción mientras se construía una línea férrea hasta el punto donde se montaría, a 16 kilómetros al norte de Sebastopol. También hubo que levantar grúas especiales para montarlo. En total fueron necesarias cinco semanas y 4.000 hombres para montar el cañón. La instalación comenzó a primeros de mayo y hasta el 5 de junio no estuvo preparado para abrir fuego.
+            Turbokill es un FPS de acción acelerada ultraviolento con estética retro que combina un estilo basado en la skill con otro basado en la masacre, ambos inspirados en juegos antiguos como el Doom o el Quake. Destruye, dispara, explota y baña en sangre a tus enemigos con diferentes armas destructivas.
             <br><br>
-            La cantidad de mano de obra necesaria para ensamblar el “Gustav” era ingente. Tenía un destacamento de 1.420 hombres al mando de un coronel. Este disponía de su propio cuartel general y personal de planificación. La dotación principal era de alrededor de 500 hombres, la mayoría de ellos necesarios para el complicado proceso de mantenimiento y manejo de la munición. El resto del personal estaba formado por varias unidades auxiliares, incluyendo una de inteligencia para determinar qué objetivos debían bombardearse. Otras tropas formaban parte de los dos batallones de artillería antiaérea ligera, que siempre acompañaban al cañón cuando viajaba y que se encargaban además de algunas tareas de ensamblaje. Una vez que el cañón estaba en posición, estos batallones antiaéreos defendían la pieza de ataques aéreos. Dos compañías patrullaban el perímetro de la posición (en una ocasión, estas compañías fueron rumanas), y en todo momento había un pequeño grupo de ingenieros civiles de Krupp que trataban los aspectos técnicos del cañón e instruían a los soldados. Las tropas ferroviarias y el personal administrativo completaban la dotación.
+            Sumérgete en un mundo medieval lleno de monstruos medievales y de armas futuristas.
+            <br><br><br>
+            <div class="aboutCenter" big>GAMEPLAY</div>
+            <br>
+            Las mecánicas principales de Turbokill están pensadas para conseguir una experiencia rápida y satisfactoria de FPS. Lucharás contra criaturas de diferentes tamaños, cada una más fuerte que la anterior.
+            <br><br>
+            Gracias a las cargas de dashes, podrás realizar hasta 3 esquives antes de que te golpeen los enemigos. Estas cargas se recuperan poco a poco a medida que pasa el tiempo.
+            <br><br>
+            <div class="aboutCenter">*gif de los dashes*</div>
+            <br>
+            Epicas batallas te esperan a lo largo de tu viaje por nuestro universo. Si consigues sobrevivir, podrás obtener mejoras de habilidades y enfrentarte a las siguientes bestias que te esperan.
+            <br><br>
+            <div class="aboutCenter">*gif matar enemigos*</div>
+            <br><br>
+            <div class="aboutCenter" big>ESTILO</div>
+            <br>
+            En Turbokill te encontrarás con un estilo similar al de la Playstation original fusionado con la temática de Bloodborne y las armas del Cyberpunk 2077.
+            <br><br>
+            <div class="aboutCenter">*foto donde se vean ambos*</div>
+            <br><br>
+            <div class="aboutCenter" big>PLATAFORMAS</div>
+            <br>
+            <div class="aboutCenter" style="gap: 30px">
+              <img style="width: 50px; height: 50px; filter: var(--textFilter)" src="Data/Images/Icons/windows.png"> 
+              <img style="width: 50px; height: 50px; filter: var(--textFilter)" src="Data/Images/Icons/playstation.png"> 
+              <img style="width: 50px; height: 50px; filter: var(--textFilter)" src="Data/Images/Icons/xbox.png"> 
+              <img style="width: 50px; height: 50px; filter: var(--textFilter)" src="Data/Images/Icons/switch.png"> 
+            </div>
           </span>
         </div>
 
@@ -1083,6 +1122,7 @@
   <!-- BOT -->
   <div id="bot" class="bot">
     <!-- SOCIALS -->
+    <div class="aboutCenter">¡Siguenos!</div>
     <div class="socials">
       <a target="_blank" href="https://www.instagram.com/gamar.games/">
         <img class="social" src="Data/Images/Icons/ig.png">
@@ -1198,6 +1238,7 @@
     else contributionsVisible = !contributionsVisible
     //UPDATE
     contributions.style.display = (contributionsVisible ? "flex" : "none")
+    if (contributionsVisible) document.getElementById('aboutContributionsScrollTo').scrollIntoView({ behavior: 'smooth' });
   }
 
 
