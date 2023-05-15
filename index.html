@@ -1418,10 +1418,12 @@
     music.src = musicSongs[musicIndex]
     musicName.innerText = musicNames[musicIndex]
     musicPlayImg.src = "Data/Images/Icons/play.png"
+    musicSeek.value = 0
+    music.play()
   }
   musicSeek.oninput = () => { music.currentTime = musicSeek.value / 1000 * music.duration }
   function updateMusicSeek() {
-    musicSeek.value = music.currentTime * 1000 / music.duration
+    if (!music.paused) musicSeek.value = music.currentTime * 1000 / music.duration
     setTimeout(updateMusicSeek, 100)
   }
   setTimeout(updateMusicSeek, 100)
