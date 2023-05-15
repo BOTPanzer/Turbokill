@@ -304,7 +304,7 @@
   .buttonArray > a {
     height: var(--buttonHeight); 
     width: fit-content;
-    padding: 0 30px; 
+    padding: 0 20px; 
     display: flex;
     align-items: center;
     position: relative;
@@ -368,6 +368,26 @@
   .buttonArray > a:hover::after {
     width: calc(100% + var(--buttonHeight));
     transform: translateX(0);
+  }
+
+  /*SLIDER*/
+  input[type=range] {
+    height: 6px;
+    appearance: none;
+    background: var(--textColor);
+    border-radius: 5px;
+    transition: all .2s;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--textColor);
+    box-shadow: 1px 1px 8px #00000079;
+    cursor: pointer;
+    transition: all .2s;
   }
 </style>
 
@@ -455,7 +475,7 @@
   }
 
   .textSmall {
-    font-size: .8rem;
+    font-size: 0.85rem;
   }
 
   .midContent {
@@ -493,6 +513,7 @@
 
   .moreTeam {
     text-align: center;
+    font-size: 1.2rem;
   }
   
 
@@ -519,7 +540,7 @@
 
   .galleryArrow {
     height: 100%; 
-    max-width: 50px; 
+    width: 70px; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -565,6 +586,7 @@
   /*VIDEO PLAYER*/
   .videoPlayer {
     width: 100%; 
+    margin-top: 30px;
     aspect-ratio: 16/9; 
     position: relative; 
   }
@@ -612,23 +634,7 @@
   }
 
   .videoControls > div:nth-child(1) > input {
-    height: 6px;
     margin-left: 15px;
-    appearance: none;
-    background: var(--textColor);
-    border-radius: 5px;
-    transition: all .2s;
-  }
-
-  .videoControls > div:nth-child(1) > input::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--textColor);
-    box-shadow: 1px 1px 8px #00000079;
-    cursor: pointer;
-    transition: all .2s;
   }
 
   .videoControls > div:nth-child(1) > input:nth-of-type(1) {
@@ -638,6 +644,61 @@
 
   .videoControls > div:nth-child(1) > input:nth-of-type(2) {
     width: 140px;
+  }
+
+  /*MUSIC PLAYER*/
+  .musicPlayer {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .musicPlayer > img {
+    width: min(400px, 80%); 
+    margin: 0 auto; 
+    aspect-ratio: 1/1; 
+    object-fit: cover; 
+    border-radius: 10px;
+  }
+
+  .musicPlayer > a {
+    width: min(400px, 80%); 
+    text-align: center;
+    margin: 25px auto; 
+    font-size: 1.2rem;
+  }
+
+  .musicPlayer > input {
+    width: min(400px, 80%); 
+    margin: 0 auto 35px auto; 
+  }
+
+  .musicPlayer > div {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .musicPlayer > div > div {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50px;
+    background: var(--textColor);
+    cursor: pointer;
+  }
+
+  .musicPlayer > div > div:nth-of-type(2) {
+    width: 75px; 
+    height: 75px; 
+  }
+
+  .musicPlayer > div > div > img {
+    width: 30%; 
+    height: 30%;
+    margin: 35%;
+    filter: brightness(0);
   }
 
   /*CONTRIBUTIONS*/
@@ -986,14 +1047,18 @@
         <div class="buttonArray">
           <a>
             <input id="moreB1" type="radio" name="row1" onclick="updateCampaing()" checked>
-            <span>Acerca</span>
+            <span>Juego</span>
           </a>
           <a>
             <input id="moreB2" type="radio" name="row1" onclick="updateCampaing()">
-            <span>Trailer</span>
+            <span>Tráiler</span>
           </a>
           <a>
             <input id="moreB3" type="radio" name="row1" onclick="updateCampaing()">
+            <span>OST</span>
+          </a>
+          <a>
+            <input id="moreB4" type="radio" name="row1" onclick="updateCampaing()">
             <span>Equipo</span>
           </a>
         </div>
@@ -1001,6 +1066,8 @@
         <!-- ABOUT -->
         <div id="moreAbout" class="moreAbout">
           <span>
+            <div class="aboutCenter" big>JUEGO</div>
+            <br>
             Turbokill es un FPS de acción acelerada ultraviolento con estética retro que combina un estilo basado en la skill con otro basado en la masacre, ambos inspirados en juegos antiguos como el Doom o el Quake. Destruye, dispara, explota y baña en sangre a tus enemigos con diferentes armas destructivas.
             <br><br>
             Sumérgete en un mundo medieval lleno de monstruos medievales y de armas futuristas.
@@ -1045,6 +1112,27 @@
               <input id="moreVideoSeek" type="range" min="0" max="1000" value="0" onclick="event.stopPropagation()">
               <img src="Data/Images/Icons/sound.png">
               <input id="moreVideoSound" type="range" min="0" max="100" value="50" onclick="event.stopPropagation()">
+            </div>
+          </div>
+        </div>
+
+        <!-- OST -->
+        <div id="moreOST" class="musicPlayer" style="display: none;">
+          <audio id="moreMusicPlayer">
+            <source src="Data/Audio/Though Time.m4a" type="audio/mp3">
+          </audio>
+          <img src="Data/Images/music.jpg">
+          <a id="moreMusicName">Through Time</a>
+          <input id="moreMusicSeek" type="range" min="0" max="1000" value="0" onclick="event.stopPropagation()">
+          <div>
+            <div id="moreMusicPrev">
+              <img style="transform: rotate(180deg);" src="Data/Images/Icons/arrow.png">
+            </div>
+            <div id="moreMusicPlay">
+              <img id="moreMusicPlayImg" src="Data/Images/Icons/play.png">
+            </div>
+            <div id="moreMusicNext">
+              <img src="Data/Images/Icons/arrow.png">
             </div>
           </div>
         </div>
@@ -1197,7 +1285,7 @@
     //SCROLL TO TOP
     if (currentTab == tab) window.scrollTo({top: 0, behavior: 'smooth'});
     //PAUSE VIDEO PLAYER
-    videoPlayer.pause()
+    video.pause()
     //START
     if (currentTab == tab) return;
     isChangingTab = true
@@ -1296,24 +1384,62 @@
   }
   videoSeek.oninput = () => { video.currentTime = videoSeek.value / 1000 * video.duration }
   videoSound.oninput = () => { video.volume = videoSound.value / 100 }
-  function updateSeekBar() {
+  function updateVideoSeek() {
     videoSeek.value = video.currentTime * 1000 / video.duration
-    setTimeout(updateSeekBar, 100)
+    setTimeout(updateVideoSeek, 100)
   }
-  setTimeout(updateSeekBar, 100)
+  setTimeout(updateVideoSeek, 100)
+
+
+  //MUSIC
+  let musicIndex = 0
+  const music = document.getElementById('moreMusicPlayer')
+  const musicSongs = ['Data/Audio/Though Time.m4a', 'Data/Audio/The End Of Times.m4a']
+  const musicName = document.getElementById('moreMusicName')
+  const musicNames = ['Through Time', 'The End Of Times']
+  const musicPlay = document.getElementById('moreMusicPlay')
+  const musicPlayImg = document.getElementById('moreMusicPlayImg')
+  const musicPrev = document.getElementById('moreMusicPrev')
+  const musicNext = document.getElementById('moreMusicNext')
+  const musicSeek = document.getElementById('moreMusicSeek')
+  music.volume = 0.5
+  music.onpause = () => { musicPlayImg.src = "Data/Images/Icons/play.png" }
+  music.onplay = () => { musicPlayImg.src = "Data/Images/Icons/pause.png" }
+  musicPlay.onclick = () => {
+    if (music.paused) music.play()
+    else music.pause()
+  }
+  musicPrev.onclick = () => {
+    musicNext.performClick()
+  }
+  musicNext.onclick = () => {
+    musicIndex++
+    if (musicIndex == musicSongs.length) musicIndex = 0
+    music.src = musicSongs[musicIndex]
+    musicName.innerText = musicNames[musicIndex]
+    musicPlayImg.src = "Data/Images/Icons/play.png"
+  }
+  musicSeek.oninput = () => { music.currentTime = musicSeek.value / 1000 * music.duration }
+  function updateMusicSeek() {
+    musicSeek.value = music.currentTime * 1000 / music.duration
+    setTimeout(updateMusicSeek, 100)
+  }
+  setTimeout(updateMusicSeek, 100)
 
 
   //MORE
   let currentCamp = 'about'
-  const videoPlayer = document.getElementById('moreVideoPlayer')
   function updateCampaing() {
-    //PAUSE VIDEO PLAYER
-    videoPlayer.pause()
+    //PAUSE PLAYERS
+    video.pause()
+    music.pause()
     //GET CURRENT BUTTON
     if (document.getElementById('moreB1').checked)
       currentCamp = 'about'
     else if (document.getElementById('moreB2').checked)
       currentCamp = 'video'
+      else if (document.getElementById('moreB3').checked)
+      currentCamp = 'ost'
     else
       currentCamp = 'team'
     //UPDATE
@@ -1322,6 +1448,7 @@
       case 'about':
         document.getElementById('moreAbout').style.display = ''
         document.getElementById('moreVideo').style.display = 'none'
+        document.getElementById('moreOST').style.display = 'none'
         document.getElementById('moreTeam').style.display = 'none'
         break
       case 'video':
@@ -1330,11 +1457,19 @@
         }, 200) 
         document.getElementById('moreAbout').style.display = 'none'
         document.getElementById('moreVideo').style.display = ''
+        document.getElementById('moreOST').style.display = 'none'
+        document.getElementById('moreTeam').style.display = 'none'
+        break
+      case 'ost':
+        document.getElementById('moreAbout').style.display = 'none'
+        document.getElementById('moreVideo').style.display = 'none'
+        document.getElementById('moreOST').style.display = ''
         document.getElementById('moreTeam').style.display = 'none'
         break
       case 'team':
         document.getElementById('moreAbout').style.display = 'none'
         document.getElementById('moreVideo').style.display = 'none'
+        document.getElementById('moreOST').style.display = 'none'
         document.getElementById('moreTeam').style.display = ''
         break
     }
