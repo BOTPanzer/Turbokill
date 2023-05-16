@@ -13,7 +13,8 @@
 
 <!-- MAIN -->
 <style>
-  @font-face { font-family: blender; src: url('Data/Fonts/Blender-Pro-Bold.otf'); }
+  @font-face { font-family: blender; src: url('Data/Fonts/Blender.otf'); }
+  @font-face { font-family: kiwi; src: url('Data/Fonts/Kiwi.ttf'); }
 
   html {
     --textColor: #f5f5f5;
@@ -465,6 +466,7 @@
     margin: 50px auto; 
     font-size: min(3.8rem, 10vw); 
     text-align: center;
+    font-family: kiwi;
   }
 
   .desc {
@@ -508,7 +510,8 @@
   }
 
   .aboutCenter[big] {
-    font-size: 2rem;
+    font-family: kiwi;
+    font-size: 1.8rem;
   }
 
   .moreTeam {
@@ -1103,7 +1106,7 @@
 
         <!-- VIDEO -->
         <div id="moreVideo" class="videoPlayer" style="display: none;">
-          <video id="moreVideoPlayer" controlsList="nofullscreen" autoplay="true">
+          <video id="moreVideoPlayer" controlsList="nofullscreen">
             <source src="Data/Videos/trailer.mp4" type="video/mp4">
           </video>
           <div id="videoControls" class="videoControls">
